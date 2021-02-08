@@ -9,14 +9,14 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        greeting();
         Scanner sc = new Scanner(System.in);
         Color curColor;
-        double redWeight, greenWeight, blueWeight;
 
         BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < image.getWidth(); i++) {
             for (int j = 0; j < image.getHeight(); j++) {
-                image.setRGB(i, j, new Color(255, 255, 255).getRGB());
+                image.setRGB(i, j, new Color(0xFFFFFF).getRGB());
             }
         }
 
@@ -47,55 +47,10 @@ public class Main {
                 }
             }
         } else {
-            System.out.print("Enter red weight: ");
-            while (true) {
-                try {
-                    redWeight = Double.parseDouble(sc.nextLine());
-                    if (redWeight >= 0 && redWeight <= 1)
-                        break;
-                    else {
-                        System.out.println("Value can be only between 0 and 1!");
-                        System.out.print("Enter again: ");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Value can be only between 0 and 1!");
-                    System.out.print("Enter again: ");
-                }
-            }
-            System.out.print("Enter green weight: ");
-            while (true) {
-                try {
-                    greenWeight = Double.parseDouble(sc.nextLine());
-                    if (greenWeight >= 0 && greenWeight <= 1)
-                        break;
-                    else {
-                        System.out.println("Value can be only between 0 and 1!");
-                        System.out.print("Enter again: ");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Value can be only between 0 and 1!");
-                    System.out.print("Enter again: ");
-                }
-            }
-            System.out.print("Enter blue weight: ");
-            while (true) {
-                try {
-                    blueWeight = Double.parseDouble(sc.nextLine());
-                    if (blueWeight >= 0 && blueWeight <= 1)
-                        break;
-                    else {
-                        System.out.println("Value can be only between 0 and 1!");
-                        System.out.print("Enter again: ");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Value can be only between 0 and 1!");
-                    System.out.print("Enter again: ");
-                }
-            }
             // Закрашиваем половину верхнего левого квадрата (цветной режим)
             for (int i = 0; i <= image.getWidth() / 2; i++) {
                 for (int j = 0; j <= i; j++) {
-                    image.setRGB(i, j, new Color((int) (Math.random() * 255 * redWeight), (int) (Math.random() * 255 * greenWeight), (int) (Math.random() * 255 * blueWeight)).getRGB());
+                    image.setRGB(i, j, new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)).getRGB());
                 }
             }
         }
@@ -137,31 +92,68 @@ public class Main {
         }
 
         // Блюрим фотку
+        System.out.println("Wait please.");
         BufferedImage result = current.getSubimage(0, 0, 1000, 1000);
         Color currentColor;
         Color col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12;
-        for (int i = 2; i < current.getWidth() - 2; i++) {
-            for (int j = 2; j < current.getHeight() - 2; j++) {
-                col1 = new Color(current.getRGB(i - 1, j));
-                col2 = new Color(current.getRGB(i, j - 1));
-                col3 = new Color(current.getRGB(i + 1, j));
-                col4 = new Color(current.getRGB(i, j + 1));
+        // Прогоняем 50 раз операцию, чтобы всё сгладилось
+        for (int loops = 0; loops < 50; loops++) {
+            // Blur
+            for (int i = 2; i < current.getWidth() - 2; i++) {
+                for (int j = 2; j < current.getHeight() - 2; j++) {
+                    col1 = new Color(current.getRGB(i - 1, j));
+                    col2 = new Color(current.getRGB(i, j - 1));
+                    col3 = new Color(current.getRGB(i + 1, j));
+                    col4 = new Color(current.getRGB(i, j + 1));
 
-                col5 = new Color(current.getRGB(i + 1, j + 1));
-                col6 = new Color(current.getRGB(i - 1, j + 1));
-                col7 = new Color(current.getRGB(i + 1, j - 1));
-                col8 = new Color(current.getRGB(i - 1, j - 1));
+                    col5 = new Color(current.getRGB(i + 1, j + 1));
+                    col6 = new Color(current.getRGB(i - 1, j + 1));
+                    col7 = new Color(current.getRGB(i + 1, j - 1));
+                    col8 = new Color(current.getRGB(i - 1, j - 1));
 
-                col9 = new Color(current.getRGB(i, j + 2));
-                col10 = new Color(current.getRGB(i + 2, j));
-                col11 = new Color(current.getRGB(i, j - 2));
-                col12 = new Color(current.getRGB(i - 2, j));
-                currentColor = new Color(
-                        (col1.getRed() + col2.getRed() + col3.getRed() + col4.getRed() + col5.getRed() + col6.getRed() + col7.getRed() + col8.getRed() + col9.getRed() + col10.getRed() + col11.getRed() + col12.getRed())/12,
-                        (col1.getGreen() + col2.getGreen() + col3.getGreen() + col4.getGreen() + col5.getGreen() + col6.getGreen() + col7.getGreen() + col8.getGreen() + col9.getGreen() + col10.getGreen() + col11.getGreen() + col12.getGreen())/12,
-                        (col1.getBlue() + col2.getBlue() + col3.getBlue() + col4.getBlue() + col5.getBlue() + col6.getBlue() + col7.getBlue() + col8.getBlue() + col9.getBlue() + col10.getBlue() + col11.getBlue() + col12.getBlue())/12
-                );
-                result.setRGB(i, j, currentColor.getRGB());
+                    col9 = new Color(current.getRGB(i, j + 2));
+                    col10 = new Color(current.getRGB(i + 2, j));
+                    col11 = new Color(current.getRGB(i, j - 2));
+                    col12 = new Color(current.getRGB(i - 2, j));
+                    currentColor = new Color(
+                            (col1.getRed() + col2.getRed() + col3.getRed() + col4.getRed() + col5.getRed() + col6.getRed() + col7.getRed() + col8.getRed() + col9.getRed() + col10.getRed() + col11.getRed() + col12.getRed())/12,
+                            (col1.getGreen() + col2.getGreen() + col3.getGreen() + col4.getGreen() + col5.getGreen() + col6.getGreen() + col7.getGreen() + col8.getGreen() + col9.getGreen() + col10.getGreen() + col11.getGreen() + col12.getGreen())/12,
+                            (col1.getBlue() + col2.getBlue() + col3.getBlue() + col4.getBlue() + col5.getBlue() + col6.getBlue() + col7.getBlue() + col8.getBlue() + col9.getBlue() + col10.getBlue() + col11.getBlue() + col12.getBlue())/12
+                    );
+                    result.setRGB(i, j, currentColor.getRGB());
+                }
+            }
+            current = result.getSubimage(0, 0, 1000, 1000);
+        }
+
+        // Рисуем новую картинку по очертаниям
+        if (ch == 1) {
+            for (int i = 2; i < current.getWidth(); i++) {
+                for (int j = 2; j < current.getHeight(); j++) {
+                    currentColor = new Color(result.getRGB(i, j));
+                    if (currentColor.getRed() > 96)
+                        currentColor = new Color(0xFFFFFF);
+                    else
+                        currentColor = new Color(0);
+                    result.setRGB(i, j, currentColor.getRGB());
+                }
+            }
+        } else {
+            int currentRed, currentGreen, currentBlue;
+            for (int i = 2; i < current.getWidth(); i++) {
+                for (int j = 2; j < current.getHeight(); j++) {
+                    currentColor = new Color(result.getRGB(i, j));
+                    currentRed = currentColor.getRed();
+                    currentGreen = currentColor.getGreen();
+                    currentBlue = currentColor.getBlue();
+                    if (currentRed >= currentGreen && currentRed >= currentBlue)
+                        currentColor = new Color(0xFF0000);
+                    else if (currentGreen >= currentRed && currentGreen >= currentBlue)
+                        currentColor = new Color(0x00FF00);
+                    else
+                        currentColor = new Color(0x0000FF);
+                    result.setRGB(i, j, currentColor.getRGB());
+                }
             }
         }
 
@@ -181,4 +173,26 @@ public class Main {
             }
         }
     }
+
+    private static void greeting() {
+        try {
+            System.out.println(" _____    _           ______                   ");
+            Thread.sleep(500);
+            System.out.println("|  __ \\  |_|         /  __  \\                  ");
+            Thread.sleep(500);
+            System.out.println("| |__| |  _    ____ |  /  \\__|   ____   _  ___ ");
+            Thread.sleep(500);
+            System.out.println("|  ___/  | |  / __/ | |  ____   / __ \\ | |/_  \\");
+            Thread.sleep(500);
+            System.out.println("| |      | | | |__  |  \\_\\   | |  ___/ |  / \\ |");
+            Thread.sleep(500);
+            System.out.println("|_|      |_|  \\___\\  \\______/   \\____  |__| |_|\n");
+            Thread.sleep(500);
+            System.out.println("     https://github.com/DevVladikNT/PicGen\n");
+            Thread.sleep(500);
+        } catch (Exception e) {
+            System.out.println("Error while greeting.");
+        }
+    }
+
 }
