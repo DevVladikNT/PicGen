@@ -13,7 +13,8 @@ fun main(args: Array<String>) {
     while (!exit) {
         print("\n1 - Generate new symmetry image\n" +
                 "2 - Black-white filter\n" +
-                "3 - Color shifts filter" +
+                "3 - Color shifts filter\n" +
+                "4 - Cyberpunk filter\n" +
                 "0 - Exit\n" +
                 ">> ")
         correct = false
@@ -45,6 +46,16 @@ fun main(args: Array<String>) {
                 try {
                     print("Enter source image path\n>> ")
                     resultImage = ColorShiftsFilter.make(sc.nextLine())
+                } catch (e: Exception) {
+                    correct = false
+                    println("Error. Maybe your path isn`t correct.")
+                }
+            }
+            "4" -> {
+                correct = true
+                try {
+                    print("Enter source image path\n>> ")
+                    resultImage = newfilter.make(sc.nextLine())
                 } catch (e: Exception) {
                     correct = false
                     println("Error. Maybe your path isn`t correct.")
