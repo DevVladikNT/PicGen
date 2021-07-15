@@ -100,9 +100,7 @@ object CircleGeneration {
         var col10: Color
         var col11: Color
         var col12: Color
-        // Прогоняем 50 раз операцию, чтобы всё сгладилось
-        for (loops in 0..49) {
-            // Blur
+        repeat(50) {
             for (i in 2 until current.width - 2) {
                 for (j in 2 until current.height - 2) {
                     col1 = Color(current.getRGB(i - 1, j))

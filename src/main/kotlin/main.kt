@@ -1,7 +1,6 @@
 import java.awt.image.BufferedImage
 import java.util.*
 import javax.imageio.ImageIO
-
 import java.io.File
 
 private lateinit var resultImage: BufferedImage
@@ -14,6 +13,7 @@ fun main(args: Array<String>) {
     while (!exit) {
         print("\n1 - Generate new symmetry image\n" +
                 "2 - Black-white filter\n" +
+                "3 - Color shifts filter" +
                 "0 - Exit\n" +
                 ">> ")
         correct = false
@@ -39,7 +39,16 @@ fun main(args: Array<String>) {
                     correct = false
                     println("Error. Maybe your path isn`t correct.")
                 }
-                // TODO
+            }
+            "3" -> {
+                correct = true
+                try {
+                    print("Enter source image path\n>> ")
+                    resultImage = ColorShiftsFilter.make(sc.nextLine())
+                } catch (e: Exception) {
+                    correct = false
+                    println("Error. Maybe your path isn`t correct.")
+                }
             }
             "0" -> exit = true
             else -> println("Incorrect.")

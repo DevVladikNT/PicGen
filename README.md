@@ -5,6 +5,7 @@ This is simple program, which can edit pictures.
 It has:
 - Symmetry image generating
 - Black-white filter
+- Color shifts filter
 
 ### Others
 
