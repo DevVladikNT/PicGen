@@ -6,6 +6,7 @@ It has:
 - Symmetry image generating
 - Black-white filter
 - Color shifts filter
+- Cyberpunk filter
 
 ### Others
 

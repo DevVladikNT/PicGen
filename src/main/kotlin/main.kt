@@ -55,7 +55,7 @@ fun main(args: Array<String>) {
                 correct = true
                 try {
                     print("Enter source image path\n>> ")
-                    resultImage = newfilter.make(sc.nextLine())
+                    resultImage = CyberpunkFilter.make(sc.nextLine())
                 } catch (e: Exception) {
                     correct = false
                     println("Error. Maybe your path isn`t correct.")
@@ -66,6 +66,7 @@ fun main(args: Array<String>) {
         }
         // Если нет ошибки в пункте выбора, сохраняем изображение
         if (correct) {
+            drawLogo()
             var str: String
             print("Enter path for saving picture\n>> ")
             while (true) {
@@ -103,5 +104,15 @@ private fun greeting() {
     source.forEach {
         print(it)
         Thread.sleep(40)
+    }
+}
+
+private fun drawLogo() {
+    val logoSrc = File(ClassLoader.getSystemResource("vk.png").file)
+    val logo = ImageIO.read(logoSrc)
+    for (i in resultImage.width - 247 until resultImage.width) {
+        for (j in resultImage.height - 42 until resultImage.height) {
+            resultImage.setRGB(i, j, logo.getRGB(i - resultImage.width + 247, j - resultImage.height + 42))
+        }
     }
 }

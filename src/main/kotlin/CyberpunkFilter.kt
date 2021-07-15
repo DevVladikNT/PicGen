@@ -3,7 +3,7 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
-object newfilter {
+object CyberpunkFilter {
 
     private lateinit var image: BufferedImage
     private lateinit var result: BufferedImage
