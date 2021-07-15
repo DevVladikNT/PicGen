@@ -1,10 +1,10 @@
 # PicGen
 
-This is simple program, which can generate a lot of different random pictures.
+This is simple program, which can edit pictures.
 
 It has:
-- Black-white mod
-- Colored mod
+- Symmetry image generating
+- Black-white filter
 
 ### Others
 
