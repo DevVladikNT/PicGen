@@ -15,6 +15,7 @@ fun main(args: Array<String>) {
                 "2 - Black-white filter\n" +
                 "3 - Color shifts filter\n" +
                 "4 - Cyberpunk filter\n" +
+                "5 - LGBT filter\n" +
                 "0 - Exit\n" +
                 ">> ")
         correct = false
@@ -56,6 +57,16 @@ fun main(args: Array<String>) {
                 try {
                     print("Enter source image path\n>> ")
                     resultImage = CyberpunkFilter.make(sc.nextLine())
+                } catch (e: Exception) {
+                    correct = false
+                    println("Error. Maybe your path isn`t correct.")
+                }
+            }
+            "5" -> {
+                correct = true
+                try {
+                    print("Enter source image path\n>> ")
+                    resultImage = LGBTFilter.make(sc.nextLine())
                 } catch (e: Exception) {
                     correct = false
                     println("Error. Maybe your path isn`t correct.")
